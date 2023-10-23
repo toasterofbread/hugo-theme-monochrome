@@ -19,6 +19,7 @@ header {
   .brand {
     display: flex;
     align-items: center;
+    gap: 10px;
 
     a {
       @include text-3xl;

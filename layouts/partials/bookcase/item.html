@@ -1,14 +1,47 @@
-{{ $cover_src := .Params.bookcase_cover_src | default .Params.bookcase_cover_src_dark }}
-{{ $cover_src_dark := .Params.bookcase_cover_src_dark | default .Params.bookcase_cover_src }}
+{{ $cover_src_a := .Params.bookcase_cover_src_a | default .Params.bookcase_cover_src_a_dark }}
+{{ $cover_src_a_dark := .Params.bookcase_cover_src_a_dark | default .Params.bookcase_cover_src_a }}
+{{ $cover_src_b := .Params.bookcase_cover_src_b | default .Params.bookcase_cover_src_b_dark }}
+{{ $cover_src_b_dark := .Params.bookcase_cover_src_b_dark | default .Params.bookcase_cover_src_b }}
+{{ $cover_src_c := .Params.bookcase_cover_src_c | default .Params.bookcase_cover_src_c_dark }}
+{{ $cover_src_c_dark := .Params.bookcase_cover_src_c_dark | default .Params.bookcase_cover_src_c }}
+
 {{ $cover_title := .Params.bookcase_cover_title | default .Title }}
+{{ $cover_description := .Params.bookcase_cover_description | default .Description }}
+{{ $source_code := .Params.source_code }}
 
 <div class="bookcase-item">
-    <figure>
-        <img src="{{ $cover_src | absURL }}" class="bookcase-item-img-light">
-        <img src="{{ $cover_src_dark | absURL }}" class="bookcase-item-img-dark">
-        <a href="{{ .RelPermalink }}" class="bookcase-item-overlay"></a>
-    </figure>
-    <figcaption>
-        <a href="{{ .RelPermalink }}">{{ $cover_title }}</a>
-    </figcaption>
+    
+    <div class="bookcase-images">
+        {{ if $cover_src_a }}
+        <figure>
+            <img src="{{ $cover_src_a | absURL }}" class="bookcase-item-img-light">
+            <img src="{{ $cover_src_a_dark | absURL }}" class="bookcase-item-img-dark">
+        </figure>
+        {{ end }}
+        {{ if $cover_src_b }}
+        <figure>
+            <img src="{{ $cover_src_b | absURL }}" class="bookcase-item-img-light">
+            <img src="{{ $cover_src_b_dark | absURL }}" class="bookcase-item-img-dark">
+        </figure>
+        {{ end }}
+        {{ if $cover_src_c }}
+        <figure>
+            <img src="{{ $cover_src_c | absURL }}" class="bookcase-item-img-light">
+            <img src="{{ $cover_src_c_dark | absURL }}" class="bookcase-item-img-dark">
+        </figure>
+        {{ end }}
+    </div>
+
+    <div class="bookcase-info">
+        <a href="{{ .RelPermalink }}">
+            <h2>{{ $cover_title }}</h2>
+            <p>{{ $cover_description }}</p>
+        </a>
+
+        <code class="bookcase-source-code-link">
+            <a href="{{ $source_code }}">
+                {{ $source_code }}
+            </a>
+        </code>
+    </div>
 </div>

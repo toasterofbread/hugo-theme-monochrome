@@ -13,6 +13,10 @@
                 {{- end -}}
             </a>
         </div>
+
+        {{- with (.Scratch.Get "params").navbar_html }}
+            {{- . | safeHTML -}}
+        {{- end -}}
     </div>
 
     <div class="toolbox">
