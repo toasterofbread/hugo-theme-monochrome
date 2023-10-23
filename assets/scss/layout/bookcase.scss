@@ -132,7 +132,7 @@
       overflow-x: scroll;
       
       padding: 1px;
-      height: 24rem;
+      height: fit-content;
       border-radius: 10px;
       scrollbar-color: var(--accent-colour-light) transparent;
       
@@ -141,7 +141,8 @@
         gap: 10px;
         
         img {
-          height: 24rem;
+          height: fit-content;
+          max-height: 24rem;
           float: left;
           object-fit:contain;
         }
