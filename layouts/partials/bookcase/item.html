@@ -1,47 +1,67 @@
-{{ $cover_src_a := .Params.bookcase_cover_src_a | default .Params.bookcase_cover_src_a_dark }}
-{{ $cover_src_a_dark := .Params.bookcase_cover_src_a_dark | default .Params.bookcase_cover_src_a }}
-{{ $cover_src_b := .Params.bookcase_cover_src_b | default .Params.bookcase_cover_src_b_dark }}
-{{ $cover_src_b_dark := .Params.bookcase_cover_src_b_dark | default .Params.bookcase_cover_src_b }}
-{{ $cover_src_c := .Params.bookcase_cover_src_c | default .Params.bookcase_cover_src_c_dark }}
-{{ $cover_src_c_dark := .Params.bookcase_cover_src_c_dark | default .Params.bookcase_cover_src_c }}
-
-{{ $cover_title := .Params.bookcase_cover_title | default .Title }}
-{{ $cover_description := .Params.bookcase_cover_description | default .Description }}
+{{ $title := .Params.bookcase_title | default .Title }}
+{{ $description := .Params.bookcase_description | default .Description }}
 {{ $source_code := .Params.source_code }}
+{{ $background_src := .Params.bookcase_background_src }}
+{{ $accent_colour := .Params.bookcase_accent_colour | default "var(--color-border)" }}
+{{ $start_year := .Params.start_year }}
+{{ $end_year := .Params.end_year }}
+{{ $links := .Params.links }}
+{{ $images := .Params.bookcase_images }}
 
-<div class="bookcase-item">
-    
-    <div class="bookcase-images">
-        {{ if $cover_src_a }}
-        <figure>
-            <img src="{{ $cover_src_a | absURL }}" class="bookcase-item-img-light">
-            <img src="{{ $cover_src_a_dark | absURL }}" class="bookcase-item-img-dark">
-        </figure>
-        {{ end }}
-        {{ if $cover_src_b }}
-        <figure>
-            <img src="{{ $cover_src_b | absURL }}" class="bookcase-item-img-light">
-            <img src="{{ $cover_src_b_dark | absURL }}" class="bookcase-item-img-dark">
-        </figure>
-        {{ end }}
-        {{ if $cover_src_c }}
-        <figure>
-            <img src="{{ $cover_src_c | absURL }}" class="bookcase-item-img-light">
-            <img src="{{ $cover_src_c_dark | absURL }}" class="bookcase-item-img-dark">
-        </figure>
-        {{ end }}
+<div class="bookcase-item" style="--accent-colour: {{ $accent_colour }}; background: url('{{ $background_src }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    {{ with $images }}
+    <div class="bookcase-images-scroll">
+        <div class="bookcase-images">
+            {{ range . }}
+            <img src="{{ . }}">
+            {{ end }}
+        </div>
     </div>
+    {{ end }}
 
     <div class="bookcase-info">
-        <a href="{{ .RelPermalink }}">
-            <h2>{{ $cover_title }}</h2>
-            <p>{{ $cover_description }}</p>
-        </a>
+        <div>
+            <div id="bookcase-topbar">
+                <a href="{{ .RelPermalink }}">
+                    <h2>{{ $title }}</h2>
+                </a>
 
-        <code class="bookcase-source-code-link">
-            <a href="{{ $source_code }}">
-                {{ $source_code }}
-            </a>
-        </code>
+                {{ with $start_year }}
+                <div id="bookcase-range">
+                    <div>{{ . }}</div>
+                    <div>~</div>
+                    
+                    {{ if $end_year }}
+                    <div>{{ $end_year }}</div>
+                    {{ else }}
+                    <div>present</div>
+                    {{ end }}
+                </div>
+                {{ end }}
+            </div>
+            <p>{{ $description }}</p>
+        </div>
+
+        <div>
+            {{ with $links }}
+            <div id="bookcase-buttons">
+                {{ range . }}
+                <div class="bookcase-button">
+                    <a href="{{ .link }}">
+                        <i class="{{ .icon }}"></i>
+                    </a>
+                </div>
+                {{ end }}
+            </div>
+            {{ end }}
+            
+            <code id="bookcase-source-code-link" style="color: var(--color-link)">
+                <h0 class="bookcase-source-code-label">Source code</h0>
+                <br>
+                <a href="{{ $source_code }}">
+                    {{ $source_code }}
+                </a>
+            </code>
+        </div>
     </div>
 </div>

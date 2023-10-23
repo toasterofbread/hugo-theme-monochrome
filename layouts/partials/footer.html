@@ -1,7 +1,13 @@
+{{ $footer_suffix := (.Scratch.Get "params").footer_suffix }}
+
 {{ with (.Scratch.Get "params").footer }}
 <footer>
     <article>
         {{- . | safeHTML -}}
+        
+        {{ with $footer_suffix }}
+        {{- . | safeHTML -}}
+        {{ end }}
     </article>
 </footer>
 {{ end }}

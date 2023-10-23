@@ -10,6 +10,7 @@
 {{ .Scratch.SetInMap "params" "enable_zooming_js" (.Params.zooming_js | default .Site.Params.enable_zooming_js | default true) }}
 {{ .Scratch.SetInMap "params" "ga_code" (.Params.ga | default .Site.GoogleAnalytics) }}
 {{ .Scratch.SetInMap "params" "footer" (.Params.footer | default .Site.Params.footer) }}
+{{ .Scratch.SetInMap "params" "footer_suffix" (.Params.footer_suffix | default "") }}
 {{ .Scratch.SetInMap "params" "math" (.Params.math | default .Site.Params.enable_math | default false) }}
 {{ .Scratch.SetInMap "params" "enable_collapsible_toc" (.Params.collapsible_toc | default .Site.Params.enable_collapsible_toc | default false) }}
 {{ .Scratch.SetInMap "params" "enable_collapsible_changelogs" (.Params.collapsible_changelogs | default .Site.Params.enable_collapsible_changelogs | default false) }}
