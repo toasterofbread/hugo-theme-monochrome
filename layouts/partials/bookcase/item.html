@@ -2,24 +2,25 @@
 {{ $description := .Params.bookcase_description | default .Description }}
 {{ $source_code := .Params.source_code }}
 {{ $background_src := .Params.bookcase_background_src }}
-{{ $accent_colour := .Params.bookcase_accent_colour | default "var(--color-border)" }}
 {{ $start_year := .Params.start_year }}
 {{ $end_year := .Params.end_year }}
 {{ $links := .Params.links }}
+{{ $tags := .Params.tags }}
 {{ $images := .Params.bookcase_images }}
 
-<div class="bookcase-item" style="--accent-colour: {{ $accent_colour }}; background: url('{{ $background_src }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-    {{ with $images }}
-    <div class="bookcase-images-scroll">
-        <div class="bookcase-images">
-            {{ range . }}
-            <img src="{{ . }}">
-            {{ end }}
-        </div>
-    </div>
-    {{ end }}
+{{ $accent_colour_light := .Params.bookcase_accent_colour_light | default "var(--color-border)" }}
+{{ $accent_colour_dark := .Params.bookcase_accent_colour_dark | default "var(--color-border)" }}
 
-    <div class="bookcase-info">
+{{ $bookcase_js := resources.Get "js/bookcase.js" }}
+{{- if hugo.IsProduction -}}
+    {{ $bookcase_js = $bookcase_js | js.Build (dict "minify" true) | resources.Fingerprint "sha512" -}}
+{{- else -}}
+    {{ $bookcase_js = $bookcase_js | js.Build -}}
+{{- end -}}
+<script defer src="{{ $bookcase_js.RelPermalink }}" integrity="{{- $bookcase_js.Data.Integrity -}}"></script>
+
+<div class="bookcase-item" tags="{{ $tags | jsonify }}" style="--accent-colour-light: {{ $accent_colour_light }}; --accent-colour-dark: {{ $accent_colour_dark }}; background: url('{{ $background_src }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <div id="bookcase-info">
         <div>
             <div id="bookcase-topbar">
                 <a href="{{ .RelPermalink }}">
@@ -29,12 +30,15 @@
                 {{ with $start_year }}
                 <div id="bookcase-range">
                     <div>{{ . }}</div>
-                    <div>~</div>
                     
-                    {{ if $end_year }}
-                    <div>{{ $end_year }}</div>
-                    {{ else }}
-                    <div>present</div>
+                    {{ if not (eq $start_year $end_year) }}
+                        <div>~</div>
+
+                        {{ if $end_year }}
+                        <div>{{ $end_year }}</div>
+                        {{ else }}
+                        <div>present</div>
+                        {{ end }}
                     {{ end }}
                 </div>
                 {{ end }}
@@ -43,20 +47,36 @@
         </div>
 
         <div>
-            {{ with $links }}
-            <div id="bookcase-buttons">
-                {{ range . }}
-                <div class="bookcase-button">
-                    <a href="{{ .link }}">
-                        <i class="{{ .icon }}"></i>
-                    </a>
+            <div id="bookcase-button-row">
+                <div id="bookcase-tags">
+                    {{ with $tags }}
+                        <i class="fa-solid fa-tags"></i>
+
+                        {{ range . }}
+                        
+                        <div class="bookcase-tag">
+                            <a href="?tag={{ . }}">{{ . }}</a>
+                        </div>
+
+                        {{ end }}
+                    {{ end }}
+                </div>
+                
+                {{ with $links }}
+                <div id="bookcase-buttons">
+                    {{ range . }}
+                    <div class="bookcase-button">
+                        <a href="{{ .link }}">
+                            <i class="{{ .icon }}"></i>
+                        </a>
+                    </div>
+                    {{ end }}
                 </div>
                 {{ end }}
             </div>
-            {{ end }}
             
             <code id="bookcase-source-code-link" style="color: var(--color-link)">
-                <h0 class="bookcase-source-code-label">Source code</h0>
+                <h0 id="bookcase-source-code-label">Source code</h0>
                 <br>
                 <a href="{{ $source_code }}">
                     {{ $source_code }}
@@ -64,4 +84,14 @@
             </code>
         </div>
     </div>
+
+    {{ with $images }}
+    <div id="bookcase-images">
+        <div id="bookcase-images-scroll">
+            {{ range . }}
+            <img src="{{ . }}">
+            {{ end }}
+        </div>
+    </div>
+    {{ end }}
 </div>

@@ -2,38 +2,51 @@
   display: grid;
   gap: 1rem;
   // grid-template-columns: repeat(auto-fill, 8rem);
-
+  
   .bookcase-item {
-    display: flex;
+    html[data-theme="light"] {
+      --accent-colour-light: var(--accent-colour-light-dark)
+    }
+    
+    html[data-theme="dark"] {
+      --accent-colour-light: var(--accent-colour-light-light)
+    }
+
+    display: inline-flex;
+    flex-wrap: wrap;
     gap: 10px;
     padding: 10px;
     border-radius: 10px;
+    justify-content: center;
 
-    .bookcase-info {
-      max-width: 500px;
+    #bookcase-info {
+      flex-basis: 300px;
+      flex-shrink: 1;
+      flex-grow: 1;
+
       display: flex;
-      // padding-right: 16px;
       margin-top: 0.5rem;
       flex-direction: column;
       justify-content: space-between;
       
       * {
         text-align: start;
-        color: var(--color-text);
+        color: var(--color-text-light);
       }
       
       h2 {
         font-size: 1.4em;
-        color: var(--accent-colour);
+        color: var(--accent-colour-light);
       }
 
       p {
         font-size: 1.15em;
       }
       
-      .bookcase-source-code-label {
+      #bookcase-source-code-label {
         font-size: 0.8em;
         opacity: 50%;
+        color: var(--color-text)
       }
 
       #bookcase-source-code-link {
@@ -46,29 +59,54 @@
         }
       }
 
-      #bookcase-topbar {
+      #bookcase-topbar, #bookcase-button-row {
         display: flex;
         justify-content: space-between;
       }
 
+      #bookcase-button-row {
+        margin-bottom: 10px;
+      }
+      
       #bookcase-range {
         display: flex;
         gap: 7px;
         padding: 5px;
         border-radius: 5px;
-        // background-color: var(--color-background-card);
-        background-color: var(--accent-colour);
+        background-color: var(--accent-colour-light);
         
         * {
           color: black;
         }
       }
 
+      #bookcase-tags {
+        display: flex;
+        flex-flow: row;
+        white-space: nowrap;
+        gap: 10px;
+
+        * {
+          font-size: 0.9em;
+          color: black;
+        }
+        
+        i {
+          margin: auto;
+          color: var(--accent-colour-light);
+        }
+
+        .bookcase-tag {
+          background: var(--accent-colour-light);
+          
+          padding: 5px;
+          border-radius: 9px;
+        }
+      }
+
       #bookcase-buttons {
-        width: 100%;
         display: flex;
         justify-content: flex-end;
-        margin-bottom: 10px;
         gap: 10px;
 
         .bookcase-button {
@@ -76,7 +114,7 @@
           font-size: 15px;
           width: 20px;
           
-          background-color: var(--color-background-inline-code);
+          background-color: var(--color-background-card);
           background-size: 20px, 20px;
           padding: 5px;
           text-align: center;
@@ -88,7 +126,7 @@
       }
     }
 
-    .bookcase-images-scroll {
+    #bookcase-images {
       display: flex;
       flex-flow: row;
       overflow-x: scroll;
@@ -96,9 +134,9 @@
       padding: 1px;
       height: 24rem;
       border-radius: 10px;
-      scrollbar-color: var(--accent-colour) transparent;
-
-      .bookcase-images {
+      scrollbar-color: var(--accent-colour-light) transparent;
+      
+      #bookcase-images-scroll {
         display: flex;
         gap: 10px;
         
