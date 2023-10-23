@@ -15,11 +15,14 @@ header {
   justify-content: space-between;
   align-items: center;
   margin: 1rem 0;
+  flex-wrap: wrap;
+  row-gap: 10px;
 
   .brand {
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-basis: 275px;
 
     a {
       @include text-3xl;
@@ -41,6 +44,15 @@ header {
     display: flex;
     align-items: center;
     column-gap: 0.5rem;
+    
+    * {
+      font-size: 0.97em !important;
+    }
+
+    * svg {
+      width: 15px !important;
+      height: 15px !important;
+    }
 
     .toolbox-btn {
       display: flex;
