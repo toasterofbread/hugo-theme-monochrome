@@ -133,3 +133,19 @@ const tag = params.get("tag")
 if (tag != null) {
     filterByTag(tag)
 }
+
+document.addEventListener("ZoomOpen", function () {
+    const image_layouts = document.querySelectorAll("#bookcase-images")
+    for (var i = 0; i < image_layouts.length; i++) {
+        const images = image_layouts.item(i)
+        images.style.setProperty("overflow-x", "visible")
+    }
+});
+
+document.addEventListener("ZoomClose", function () {
+    const image_layouts = document.querySelectorAll("#bookcase-images")
+    for (var i = 0; i < image_layouts.length; i++) {
+        const images = image_layouts.item(i)
+        images.style.setProperty("overflow-x", "scroll")
+    }
+});
