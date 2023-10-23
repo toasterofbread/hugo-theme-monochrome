@@ -61,32 +61,39 @@ function setTagIndicator(tag) {
 function filterByTag(tag) {
     const items = document.getElementsByClassName("bookcase-item")
     
-    let removed = 0
+    let remaining = items.length
     for (var i = 0; i < items.length; i++) {
         const item = items.item(i)
         
         const tags = JSON.parse(item.attributes.getNamedItem("tags").value)
         if (tags == null || !tags.includes(tag)) {
             item.remove()
-            removed++
+            remaining--
         }
     }
 
-    if (removed == items.length) {
-        const template = document.createElement("template")
-        template.innerHTML = `
-            <style>
-                h5 {
-                    width: 100%;
-                    text-align: center;
-                }
-            </style>
+    const no_projects_indicator = document.querySelector("#tag-no-projects")
+
+    if (remaining == 0) {
+        if (no_projects_indicator == null) {
+            const template = document.createElement("template")
+            template.innerHTML = `
+                <style>
+                    h5 {
+                        width: 100%;
+                        text-align: center;
+                    }
+                </style>
+            
+                <h5 id="tag-no-projects">No projects match tag '${tag}'</h5>
+                `
         
-            <h5>No projects match tag '${tag}'</h5>
-            `
-    
-        const layout = document.querySelector(".bookcase-layout")
-        layout.appendChild(template.content)
+            const layout = document.querySelector(".bookcase-layout")
+            layout.appendChild(template.content)
+        }
+    }
+    else if (no_projects_indicator != null) {
+        no_projects_indicator.remove()
     }
 
     setTagIndicator(tag)
