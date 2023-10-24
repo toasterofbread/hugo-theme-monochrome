@@ -6,7 +6,7 @@ function removeTag() {
 }
 
 function setTagIndicator(tag) {
-    const title = document.querySelector("#content.content-margin article")
+    const title = document.querySelector("#content.content-margin h1").parentElement
     title.style.setProperty("display", "flex")
     title.style.setProperty("gap", "20px")
     title.style.setProperty("align-items", "center")
@@ -66,26 +66,40 @@ function filterByTag(tag) {
         const item = items.item(i)
         
         const tags = JSON.parse(item.attributes.getNamedItem("tags").value)
-        if (tags == null || !tags.includes(tag)) {
+        if (tags == null || !tags.some(item => item.toLowerCase() == tag.toLowerCase())) {
             item.remove()
             remaining--
         }
     }
 
-    const no_projects_indicator = document.querySelector("#tag-no-projects")
+    const no_projects_indicator = document.querySelector("#tag-no-projects #tag")
 
     if (remaining == 0) {
         if (no_projects_indicator == null) {
             const template = document.createElement("template")
             template.innerHTML = `
                 <style>
-                    h5 {
+                    #tag-no-projects {
+                        display: flex;
                         width: 100%;
-                        text-align: center;
+                        justify-content: center;
+
+                        h5 {
+                            text-align: center;
+                        }
+                        h6 {
+                            margin-left: 50px;
+                            margin-top: auto;
+                        }
                     }
                 </style>
             
-                <h5 id="tag-no-projects">No projects match tag '${tag}'</h5>
+                <div id="tag-no-projects">
+                    <h5>No projects match tag '</h5>
+                    <h5 id="tag">${tag}</h5>
+                    <h5>'</h5>
+                    <h6>...yet.</h6>
+                </div>
                 `
         
             const layout = document.querySelector(".bookcase-layout")
@@ -131,7 +145,8 @@ const params = new URLSearchParams(window.location.search)
 const tag = params.get("tag")
 
 if (tag != null) {
-    filterByTag(tag)
+    console.log("TAG ", tag)
+    filterByTag(tag.trim())
 }
 
 document.addEventListener("ZoomOpen", function () {

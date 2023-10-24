@@ -2,6 +2,8 @@
 {{ $title := .title }}
 {{ $content := .content }}
 {{ $res := .res }}
+{{ $row := .row }}
+{{ $preview := .preview }}
 
 <div class="content-margin">
     <div class="my-8">
@@ -12,13 +14,29 @@
     </div>
 
     {{ with $res }}
+        {{ if not $row }}
         <div class="bookcase-layout content-margin">
+        {{ else }}
+        <div class="bookcase-layout content-margin bookcase-row">
+        {{ end }}
+            
+        {{ if $preview }}
+            {{ range first 5 . }}
+                {{ $hidden := .Params.bookcase_hidden | default false }}
+                {{ if not $hidden -}}
+                    {{- partial "bookcase/item.html" . -}}
+                {{- end }}
+            {{ end }}
+        {{ else }}
             {{ range . }}
                 {{ $hidden := .Params.bookcase_hidden | default false }}
                 {{ if not $hidden -}}
                     {{- partial "bookcase/item.html" . -}}
                 {{- end }}
             {{ end }}
+        {{ end }}
+
         </div>
+
     {{ end }}
 </div>
