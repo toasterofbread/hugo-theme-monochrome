@@ -22,17 +22,14 @@
             
         {{ if $preview }}
             {{ range first 5 . }}
-                {{ $hidden := .Params.bookcase_hidden | default false }}
+                {{ $hidden := .Params.hide_in_preview | default false }}
                 {{ if not $hidden -}}
-                    {{- partial "bookcase/item.html" . -}}
+                    {{- partial "bookcase/item.html" (dict "ctx" . "preview" true) -}}
                 {{- end }}
             {{ end }}
         {{ else }}
-            {{ range . }}
-                {{ $hidden := .Params.bookcase_hidden | default false }}
-                {{ if not $hidden -}}
-                    {{- partial "bookcase/item.html" . -}}
-                {{- end }}
+            {{ range sort . "Params.publishdate" "desc" }}
+                {{- partial "bookcase/item.html" (dict "ctx" . "preview" false) -}}
             {{ end }}
         {{ end }}
 

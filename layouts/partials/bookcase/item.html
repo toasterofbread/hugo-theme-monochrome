@@ -1,29 +1,33 @@
-{{ $title := .Params.bookcase_title | default .Title }}
-{{ $description := .Params.bookcase_description | default .Description }}
-{{ $source_code := .Params.source_code }}
-{{ $background_src := .Params.bookcase_background_src }}
-{{ $start_year := .Params.start_year }}
-{{ $end_year := .Params.end_year }}
-{{ $links := .Params.links }}
-{{ $tags := .Params.tags }}
-{{ $images := .Params.bookcase_images }}
+{{ $title := .ctx.Params.bookcase_title | default .ctx.Title }}
+{{ $description := .ctx.Params.bookcase_description | default .ctx.Description }}
+{{ $source_code := .ctx.Params.source_code }}
+{{ $background_src := .ctx.Params.bookcase_background_src }}
+{{ $start_year := .ctx.Params.start_year }}
+{{ $end_year := .ctx.Params.end_year }}
+{{ $links := .ctx.Params.links }}
+{{ $tags := .ctx.Params.tags }}
+{{ $images := .ctx.Params.bookcase_images }}
 
-{{ $accent_colour_light := .Params.bookcase_accent_colour_light | default "var(--color-border)" }}
-{{ $accent_colour_dark := .Params.bookcase_accent_colour_dark | default "var(--color-border)" }}
+{{ $accent_colour_light := .ctx.Params.bookcase_accent_colour_light | default "var(--color-border)" }}
+{{ $accent_colour_dark := .ctx.Params.bookcase_accent_colour_dark | default "var(--color-border)" }}
+{{ $preview := .preview }}
 
 {{ $bookcase_js := resources.Get "js/bookcase.js" }}
 {{- if hugo.IsProduction -}}
-    {{ $bookcase_js = $bookcase_js | js.Build (dict "minify" true) | resources.Fingerprint "sha512" -}}
+{{ $bookcase_js = $bookcase_js | js.Build (dict "minify" true) | resources.Fingerprint "sha512" -}}
 {{- else -}}
-    {{ $bookcase_js = $bookcase_js | js.Build -}}
+{{ $bookcase_js = $bookcase_js | js.Build -}}
 {{- end -}}
 <script defer src="{{ $bookcase_js.RelPermalink }}" integrity="{{- $bookcase_js.Data.Integrity -}}"></script>
 
-<div class="bookcase-item" tags="{{ $tags | jsonify }}" style="--accent-colour-light: {{ $accent_colour_light }}; --accent-colour-dark: {{ $accent_colour_dark }}; background: url('{{ $background_src }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+{{ $min_width := (cond ($preview) "500px" "0px") }}
+{{ $max_width := (cond ($preview) "500px" "inf") }}
+
+<div class="bookcase-item" tags="{{ $tags | jsonify }}" style="min-width: {{ $min_width }}; max-width: {{ $max_width }}; --accent-colour-light: {{ $accent_colour_light }}; --accent-colour-dark: {{ $accent_colour_dark }}; background: url('{{ $background_src }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
     <div id="bookcase-info">
         <div>
             <div id="bookcase-topbar">
-                <a href="{{ .RelPermalink }}">
+                <a href="{{ .ctx.RelPermalink }}">
                     <h2>{{ $title }}</h2>
                 </a>
 
