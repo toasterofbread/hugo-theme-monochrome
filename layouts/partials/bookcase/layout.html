@@ -7,7 +7,9 @@
 
 <div class="content-margin">
     <div class="my-8">
+        {{ if not $preview }}
         <h1>{{ $title }}</h1>
+        {{ end }}
         {{ if $content }}
             {{- partial "content.html" (dict "ctx" $ctx "content" $content) -}}
         {{ end }}

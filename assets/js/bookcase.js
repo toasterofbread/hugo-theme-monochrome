@@ -92,6 +92,10 @@ function filterByTag(tag) {
                             margin-top: auto;
                         }
                     }
+
+                    *.bookcase-layout {
+                        display: flex !important;
+                    }
                 </style>
             
                 <div id="tag-no-projects">
