@@ -1,15 +1,15 @@
 {{ $title := .ctx.Params.bookcase_title | default .ctx.Title }}
 {{ $description := .ctx.Params.bookcase_description | default .ctx.Description }}
 {{ $source_code := .ctx.Params.source_code }}
-{{ $background_src := .ctx.Params.bookcase_background_src }}
+{{ $background_src := .ctx.Params.background_image }}
 {{ $start_year := .ctx.Params.start_year }}
 {{ $end_year := .ctx.Params.end_year }}
 {{ $links := .ctx.Params.links }}
 {{ $tags := .ctx.Params.tags }}
-{{ $images := .ctx.Params.bookcase_images }}
+{{ $images := .ctx.Params.images }}
 
-{{ $accent_colour_light := .ctx.Params.bookcase_accent_colour_light | default "var(--color-border)" }}
-{{ $accent_colour_dark := .ctx.Params.bookcase_accent_colour_dark | default "var(--color-border)" }}
+{{ $accent_colour_light := .ctx.Params.accent_colour_light | default "var(--color-border)" }}
+{{ $accent_colour_dark := .ctx.Params.accent_colour_dark | default "var(--color-border)" }}
 {{ $preview := .preview }}
 
 {{ $bookcase_js := resources.Get "js/bookcase.js" }}
