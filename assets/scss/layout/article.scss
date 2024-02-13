@@ -81,20 +81,19 @@ article {
     border-radius: .5rem;
     background-color: var(--color-background-inline-code);
     color: var(--color-text);
-    
+
     border: 2px solid transparent;
     transition: border 0.1s;
-    
+
     &:hover {
       border: 2px solid var(--color-border);
     }
-    
+
     code { /* Disable inline code style */
       border-radius: 0;
       padding: 0;
     }
   }
-  
 
   pre.mc-prism.hide code { /* Smooth transition for prism.js */
     opacity: 0;
@@ -189,7 +188,7 @@ article {
   figure {
     @include my-4;
     text-align: center;
-    
+
     figcaption {
       @include my-2;
     }
@@ -208,6 +207,6 @@ html[data-theme='dark'] {
     a {
       color: var(--color-link);
     }
-  } 
+  }
 }
 

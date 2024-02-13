@@ -42,8 +42,11 @@
 
 {{ $line_range_diff := add (sub $line_range_end $line_range_begin) 1 }}
 
-
 <div id="emgithub_{{ .Ordinal }}" class="emgithub-container">
+    <div class="emgithub-toolbar">
+        <a target="_blank" href="{{ $target }}">{{ $user }}/{{ $repo }}/{{ $file }}</a>
+        <a target="_blank" href="{{ $raw_file_url }}">view raw</a>
+    </div>
     <div class="emgithub-code">
         <div class="emgithub-loading">
             <svg role="status" class="mr-2 w-8 h-8 text-gray-200 animate-spin fill-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -53,11 +56,9 @@
         </div>
         <pre style="tab-size: {{ $tab_size }}" class="emgithub-pre line-numbers loading" data-start="{{ $line_range_begin }}" {{ if $hl }}data-line="{{ $hl }}" data-line-offset="{{ $line_range_begin }}"{{ end }}></pre>
     </div>
-    <div class="emgithub-toolbar">
-        <a target="_blank" href="{{ $target }}">{{ $file }}</a>
-        <a target="_blank" href="{{ $raw_file_url }}">view raw</a>
-    </div>
 </div>
+
+{{ .Inner }}
 
 {{ $js := resources.Get "js/emgithub.js" }}
 {{- if hugo.IsProduction -}}
