@@ -1,6 +1,7 @@
 {{ $section_name := .Get "section" }}
 {{ $row := .Get "row" | default false }}
 {{ $preview := .Get "preview" | default false }}
+{{ $limit := .Get "limit" | default -1 }}
 
 {{ $section := .Site.GetPage $section_name }}
 {{ if not $section }}
@@ -23,5 +24,5 @@
     {{ $pages = $section.RegularPages }}
 {{ end }}
 
-{{ partial "bookcase/layout.html" (dict "ctx" . "title" $section.Title "content" $section.Content "res" $pages "row" $row "preview" $preview) }}
+{{ partial "bookcase/layout.html" (dict "ctx" . "title" $section.Title "content" $section.Content "res" $pages "row" $row "preview" $preview "limit" $limit) }}
 

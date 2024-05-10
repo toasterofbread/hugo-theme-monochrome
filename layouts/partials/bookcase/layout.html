@@ -4,6 +4,7 @@
 {{ $res := .res }}
 {{ $row := .row }}
 {{ $preview := .preview }}
+{{ $limit := .limit }}
 
 <div class="content-margin">
     <div class="my-8">
@@ -21,13 +22,19 @@
         {{ else }}
         <div class="bookcase-layout content-margin bookcase-row">
         {{ end }}
-            
+
         {{ if $preview }}
-            {{ range first 5 . }}
+            {{ $to_find := $limit }}
+            {{ range sort . "Params.publishdate" "desc" }}
+                {{ if eq $to_find 0 }}
+                    {{ break }}
+                {{ end }}
+
                 {{ $hidden := .Params.hide_in_preview | default false }}
-                {{ if not $hidden -}}
-                    {{- partial "bookcase/item.html" (dict "ctx" . "preview" true) -}}
-                {{- end }}
+                {{ if not $hidden }}
+                    {{ partial "bookcase/item.html" (dict "ctx" . "preview" true) }}
+                    {{ $to_find = sub $to_find 1 }}
+                {{ end }}
             {{ end }}
         {{ else }}
             {{ range sort . "Params.publishdate" "desc" }}

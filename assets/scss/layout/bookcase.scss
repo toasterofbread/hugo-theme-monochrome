@@ -21,11 +21,13 @@
   html[data-theme="light"] {
     --accent-colour-light: var(--accent-colour-light-dark)
   }
-  
+
   html[data-theme="dark"] {
     --accent-colour-light: var(--accent-colour-light-light)
   }
-  
+
+  background-color: #7d7d7d !important;
+
   display: inline-flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -34,7 +36,7 @@
   justify-content: center;
 
   box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.1);
-  
+
   #bookcase-info {
     flex-basis: 300px;
     flex-shrink: 1;
@@ -44,12 +46,12 @@
     margin-top: 0.5rem;
     flex-direction: column;
     justify-content: space-between;
-    
+
     * {
       text-align: start;
       color: var(--color-text-light);
     }
-    
+
     h2 {
       font-size: 1.4em;
       color: var(--accent-colour-light);
@@ -58,7 +60,7 @@
     p {
       font-size: 1.05em;
     }
-    
+
     #bookcase-source-code-label {
       font-size: 0.8em;
       opacity: 50%;
@@ -84,7 +86,7 @@
     #bookcase-button-row {
       margin-bottom: 10px;
     }
-    
+
     #bookcase-range {
       display: flex;
       height: fit-content;
@@ -92,7 +94,7 @@
       padding: 5px;
       border-radius: 3px;
       background-color: var(--accent-colour-light);
-      
+
       * {
         color: black;
       }
@@ -108,7 +110,7 @@
         font-size: 0.9em;
         color: black;
       }
-      
+
       i {
         margin: auto;
         color: var(--accent-colour-light);
@@ -116,7 +118,7 @@
 
       .bookcase-tag {
         background: var(--accent-colour-light);
-        
+
         padding: 5px;
         border-radius: 3px;
       }
@@ -132,7 +134,7 @@
         border-radius: 50%;
         font-size: 15px;
         width: 20px;
-        
+
         background-color: var(--color-background-card);
         background-size: 20px, 20px;
         padding: 5px;
@@ -149,17 +151,17 @@
     display: flex;
     flex-flow: row;
     overflow-x: scroll;
-    
+
     padding: 1px;
     height: fit-content;
     border-radius: 8px;
     max-width: 500px;
     scrollbar-color: var(--accent-colour-light) transparent;
-    
+
     #bookcase-images-scroll {
       display: flex;
       gap: 10px;
-      
+
       img {
         height: fit-content;
         max-height: 18rem;
