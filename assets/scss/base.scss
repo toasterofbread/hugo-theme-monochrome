@@ -59,6 +59,11 @@ input {
   border: none;
 }
 
+embed {
+    border: 2px solid var(--color-border);
+    border-radius: 5px;
+}
+
 mark {
   background-color: var(--color-background-mark);
 }
