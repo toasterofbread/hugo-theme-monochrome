@@ -1,6 +1,7 @@
 {{ $title := .ctx.Params.bookcase_title | default .ctx.Title }}
 {{ $description := .ctx.Params.bookcase_description | default .ctx.Description }}
 {{ $source_code := .ctx.Params.source_code }}
+{{ $demo_url := .ctx.Params.demo_url }}
 {{ $background_src := .ctx.Params.background_image }}
 {{ $start_year := .ctx.Params.start_year }}
 {{ $end_year := .ctx.Params.end_year }}
@@ -34,7 +35,7 @@
                 {{ with $start_year }}
                 <div id="bookcase-range">
                     <div>{{ . }}</div>
-                    
+
                     {{ if not (eq $start_year $end_year) }}
                         <div>~</div>
 
@@ -57,15 +58,19 @@
                         <i class="fa-solid fa-tags"></i>
 
                         {{ range . }}
-                        
+
                         <div class="bookcase-tag">
-                            <a href="?tag={{ . }}">{{ . }}</a>
+                            {{ if $preview }}
+                                <a href="projects?tag={{ . }}">{{ . }}</a>
+                            {{ else }}
+                                <a href="?tag={{ . }}">{{ . }}</a>
+                            {{ end }}
                         </div>
 
                         {{ end }}
                     {{ end }}
                 </div>
-                
+
                 {{ with $links }}
                 <div id="bookcase-buttons">
                     {{ range . }}
@@ -78,7 +83,17 @@
                 </div>
                 {{ end }}
             </div>
-            
+
+            {{ if $demo_url }}
+                <code id="bookcase-source-code-link" style="color: var(--color-link); margin-bottom: 10px;">
+                    <h0 id="bookcase-source-code-label">Try me!</h0>
+                    <br>
+                    <a href="{{ $demo_url }}">
+                        {{ $demo_url }}
+                    </a>
+                </code>
+            {{ end }}
+
             <code id="bookcase-source-code-link" style="color: var(--color-link)">
                 <h0 id="bookcase-source-code-label">Source code</h0>
                 <br>
