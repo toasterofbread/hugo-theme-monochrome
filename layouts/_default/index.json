@@ -1,7 +1,9 @@
 {{- $index := slice -}}
-{{- range .Site.RegularPages -}}
+{{- range .Site.Pages -}}
     {{ if not (.Scratch.Get "params").search_hidden }}
-        {{- $index = $index | append (dict "title" .Title "content" .Plain "permalink" .Permalink) -}}
+        {{ if and (ne .Title "") (ne .Plain "") }}
+            {{- $index = $index | append (dict "title" .Title "content" .Plain "permalink" .Permalink) -}}
+        {{ end }}
     {{ end }}
 {{- end -}}
 {{- $index | jsonify -}}
