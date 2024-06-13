@@ -42,7 +42,7 @@
                         {{ if $end_year }}
                         <div>{{ $end_year }}</div>
                         {{ else }}
-                        <div>present</div>
+                        <div>{{ i18n "year_present" }}</div>
                         {{ end }}
                     {{ end }}
                 </div>
@@ -95,7 +95,7 @@
             {{ end }}
 
             <code id="bookcase-source-code-link" style="color: var(--color-link)">
-                <h0 id="bookcase-source-code-label">Source code</h0>
+                <h0 id="bookcase-source-code-label">{{ i18n "source_code_label" }}</h0>
                 <br>
                 <a href="{{ $source_code }}">
                     {{ $source_code }}
