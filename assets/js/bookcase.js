@@ -1,7 +1,7 @@
 function removeTag() {
     const url = new URL(window.location.href)
     url.searchParams.delete("tag")
-    
+
     window.location = url.search ? url.href : url.href.replace('?', '')
 }
 
@@ -28,7 +28,7 @@ function setTagIndicator(tag) {
                 border: 2px solid var(--color-border);
                 padding: 5px;
                 border-radius: 9px;
-                
+
                 * {
                     color: var(--color-text);
                 }
@@ -43,28 +43,28 @@ function setTagIndicator(tag) {
         </style>
 
         <div id="bookcase-tag">
-            <i class="fa-solid fa-tag"></i>
+            <i class="bx bx-tag-alt"></i>
             <div id="tag-label">${tag}</div>
 
             <button>
-                <i class="fa-solid fa-xmark"></i>
-            </button> 
+                <i class="bx bx-x"></i>
+            </button>
         </div>
         `
 
     title.appendChild(template.content)
-    
+
     const remove_button = title.querySelector("#bookcase-tag button")
     remove_button.addEventListener("click", removeTag)
 }
 
 function filterByTag(tag) {
     const items = document.getElementsByClassName("bookcase-item")
-    
+
     let remaining = items.length
     for (var i = 0; i < items.length; i++) {
         const item = items.item(i)
-        
+
         const tags = JSON.parse(item.attributes.getNamedItem("tags").value)
         if (tags == null || !tags.some(item => item.toLowerCase() == tag.toLowerCase())) {
             item.remove()
@@ -97,7 +97,7 @@ function filterByTag(tag) {
                         display: flex !important;
                     }
                 </style>
-            
+
                 <div id="tag-no-projects">
                     <h5>No projects match tag '</h5>
                     <h5 id="tag">${tag}</h5>
@@ -105,7 +105,7 @@ function filterByTag(tag) {
                     <h6>...yet.</h6>
                 </div>
                 `
-        
+
             const layout = document.querySelector(".bookcase-layout")
             layout.appendChild(template.content)
         }
@@ -123,7 +123,7 @@ function onThemeChanged() {
     const items = document.getElementsByClassName("bookcase-item")
     for (var i = 0; i < items.length; i++) {
         const item = items.item(i)
-        
+
         item.style.setProperty(
             "--accent-colour",
             light ? item.style.getPropertyValue("--accent-colour-dark") : item.style.getPropertyValue("--accent-colour-light")
